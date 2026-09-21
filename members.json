@@ -3,19 +3,19 @@
     "id": 0,
     "name": "EXILE ATSUSHI",
     "source": "EXILE",
-    "image": "https://www.ldh.co.jp/image/management2/exile_atsushi/person_artist_atsushi_260518.jpg"
+    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/129/person_main_img.jpg"
   },
   {
     "id": 1,
     "name": "EXILE TAKAHIRO",
     "source": "EXILE",
-    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/130/person_main_img.jpg"
+    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/327/person_main_img.jpg"
   },
   {
     "id": 2,
     "name": "EXILE AKIRA",
     "source": "EXILE THE SECOND",
-    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/327/person_main_img.jpg"
+    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/130/person_main_img.jpg"
   },
   {
     "id": 3,
