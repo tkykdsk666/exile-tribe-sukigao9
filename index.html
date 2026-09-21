@@ -1,18 +1,201 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EXILE TRIBE 好き顔9選</title>
-<style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;background:#faf7fb;color:#28242a}main{max-width:900px;margin:auto;padding:28px 16px 60px}.card{background:#fff;border:1px solid #e8e0e9;border-radius:20px;padding:24px;margin:14px 0;box-shadow:0 3px 18px #00000008}h1{font-size:30px;margin:4px 0 8px}.sub{color:#756c77;margin:0 0 22px}button{border:0;border-radius:12px;padding:12px 18px;font-size:15px;cursor:pointer;background:#29252b;color:white}button.secondary{background:#eee9ee;color:#29252b}button.pink{background:#e96aa7}.row{display:flex;gap:10px;flex-wrap:wrap}.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}.person{border:1px solid #e8e0e9;border-radius:18px;overflow:hidden;background:#fff;cursor:pointer}.person:hover{border-color:#e96aa7}.photo{aspect-ratio:1/1;background:#eee9ee;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px}.photo img{width:100%;height:100%;object-fit:cover;display:block}.name{text-align:center;padding:13px 8px 4px;font-weight:700}.group{text-align:center;color:#8a7f8b;font-size:12px;padding-bottom:13px}.progress{height:8px;background:#eee9ee;border-radius:9px;overflow:hidden;margin:14px 0 20px}.bar{height:100%;background:#e96aa7;width:0}.hidden{display:none!important}.result{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.rank{border:1px solid #e8e0e9;border-radius:14px;overflow:hidden;background:#fff}.rank .photo{aspect-ratio:1/1}.ranktext{padding:10px}.ranknum{font-size:13px;color:#e96aa7;font-weight:700}.note{font-size:12px;color:#827783;line-height:1.7;margin-top:20px}@media(max-width:600px){.compare{gap:8px}.result{grid-template-columns:repeat(2,1fr)}h1{font-size:25px}}</style></head>
-<body><main>
-<section id="home" class="card"><h1>EXILE TRIBE 好き顔9選</h1><p class="sub">現役EXILE TRIBEメンバー85人から、好きな顔を9人選びます。</p><p>2人の写真を見比べて、好きなほうを選んでください。選択結果からEloレーティングを更新し、最後にTOP9を表示します。</p><div class="row"><button class="pink" id="start200">200回で開始</button><button class="pink" id="start400">400回で開始</button></div><p class="note">メンバー写真はLDH公式アーティストページで使用されている画像を参照しています。画像はLDHの配信先から直接読み込みます。メンバー構成は2026年9月21日に確認したLDH公式管理ページを基準にしています。兼任メンバーは1回だけ収録しています。<br><a href="https://www.ldh.co.jp/chh/management/" target="_blank" rel="noopener">LDH 公式 ARTIST / MANAGEMENT</a></p></section>
-<section id="game" class="hidden"><div class="card"><div id="count"></div><div class="progress"><div class="bar" id="bar"></div></div><div class="compare"><div class="person" id="a"><div class="photo" id="pa"></div><div class="name" id="na"></div><div class="group" id="ga"></div></div><div class="person" id="b"><div class="photo" id="pb"></div><div class="name" id="nb"></div><div class="group" id="gb"></div></div></div><div class="row" style="margin-top:14px"><button class="secondary" id="both">两个都喜欢</button><button class="secondary" id="skip">跳过</button><button class="secondary" id="undo">返回</button></div></div></section>
-<section id="result" class="card hidden"><h1>我的好き顔9選</h1><p class="sub">Eloレーティングによる結果</p><div class="result" id="grid"></div><div style="height:16px"></div><button class="pink" id="again">もう一度</button><p class="note">写真：LDH公式アーティストページ。<a href="https://www.ldh.co.jp/chh/management/" target="_blank" rel="noopener">LDH公式サイト</a></p></section>
-</main><script>
-const PEOPLE=[{"group": "EXILE", "name": "EXILE ATSUSHI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/128/person_main_img.jpg"}, {"group": "EXILE", "name": "EXILE AKIRA", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/129/person_main_img.jpg"}, {"group": "EXILE", "name": "EXILE TAKAHIRO", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/130/person_main_img.jpg"}, {"group": "EXILE", "name": "橘KENCHI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/131/person_main_img.jpg"}, {"group": "EXILE", "name": "EXILE TETSUYA", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/133/person_main_img.jpg"}, {"group": "EXILE", "name": "EXILE NESMITH", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/134/person_main_img.jpg"}, {"group": "EXILE", "name": "EXILE SHOKICHI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/135/person_main_img.jpg"}, {"group": "EXILE", "name": "EXILE NAOTO", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/136/person_main_img.jpg"}, {"group": "EXILE", "name": "小林直己", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/137/person_main_img.jpg"}, {"group": "EXILE", "name": "白濱亜嵐", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/339/person_main_img.jpg"}, {"group": "EXILE", "name": "世界", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/301/person_main_img.jpg"}, {"group": "EXILE", "name": "佐藤大樹", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/302/person_main_img.jpg"}, {"group": "三代目 J SOUL BROTHERS", "name": "ELLY", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/138/person_main_img.jpg"}, {"group": "三代目 J SOUL BROTHERS", "name": "山下健二郎", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/139/person_main_img.jpg"}, {"group": "三代目 J SOUL BROTHERS", "name": "岩田剛典", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/140/person_main_img.jpg"}, {"group": "三代目 J SOUL BROTHERS", "name": "今市隆二", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/141/person_main_img.jpg"}, {"group": "三代目 J SOUL BROTHERS", "name": "ØMI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/142/person_main_img.jpg"}, {"group": "GENERATIONS", "name": "片寄涼太", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/204/person_main_img.jpg"}, {"group": "GENERATIONS", "name": "数原龍友", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/205/person_main_img.jpg"}, {"group": "GENERATIONS", "name": "小森隼", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/206/person_main_img.jpg"}, {"group": "GENERATIONS", "name": "佐野玲於", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/207/person_main_img.jpg"}, {"group": "GENERATIONS", "name": "中務裕太", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/209/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "LIKIYA", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/263/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "陣", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/267/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "RIKU", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/260/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "神谷健太", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/264/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "與那嶺瑠唯", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/274/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "山本彰吾", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/272/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "川村壱馬", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/265/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "吉野北人", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/273/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "岩谷翔吾", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/262/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "浦川翔平", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/275/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "藤原樹", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/271/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "武知海青", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/269/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "長谷川慎", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/270/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "龍", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/261/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "鈴木昂秀", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/268/person_main_img.jpg"}, {"group": "THE RAMPAGE", "name": "後藤拓磨", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/266/person_main_img.jpg"}, {"group": "FANTASTICS", "name": "澤本夏輝", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/255/person_main_img.jpg"}, {"group": "FANTASTICS", "name": "瀬口黎弥", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/277/person_main_img.jpg"}, {"group": "FANTASTICS", "name": "堀夏喜", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/279/person_main_img.jpg"}, {"group": "FANTASTICS", "name": "木村慧人", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/280/person_main_img.jpg"}, {"group": "FANTASTICS", "name": "八木勇征", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/282/person_main_img.jpg"}, {"group": "FANTASTICS", "name": "中島颯太", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/281/person_main_img.jpg"}, {"group": "BALLISTIK BOYZ", "name": "日髙竜太", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/378/person_main_img.jpg"}, {"group": "BALLISTIK BOYZ", "name": "加納嘉将", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/436/person_main_img.jpg"}, {"group": "BALLISTIK BOYZ", "name": "海沼流星", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/380/person_main_img.jpg"}, {"group": "BALLISTIK BOYZ", "name": "深堀未来", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/381/person_main_img.jpg"}, {"group": "BALLISTIK BOYZ", "name": "奥田力也", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/382/person_main_img.jpg"}, {"group": "BALLISTIK BOYZ", "name": "松井利樹", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/383/person_main_img.jpg"}, {"group": "BALLISTIK BOYZ", "name": "砂田将宏", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/384/person_main_img.jpg"}, {"group": "PSYCHIC FEVER", "name": "剣", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/498/person_main_img.jpg"}, {"group": "PSYCHIC FEVER", "name": "中西椋雅", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/451/person_main_img.jpg"}, {"group": "PSYCHIC FEVER", "name": "渡邉廉", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/452/person_main_img.jpg"}, {"group": "PSYCHIC FEVER", "name": "JIMMY", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/456/person_main_img.jpg"}, {"group": "PSYCHIC FEVER", "name": "小波津志", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/454/person_main_img.jpg"}, {"group": "PSYCHIC FEVER", "name": "半田龍臣", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/455/person_main_img.jpg"}, {"group": "PSYCHIC FEVER", "name": "WEESA", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/458/person_main_img.jpg"}, {"group": "LIL LEAGUE", "name": "岩城星那", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/487/person_main_img.jpg"}, {"group": "LIL LEAGUE", "name": "中村龍大", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/488/person_main_img.jpg"}, {"group": "LIL LEAGUE", "name": "山田晃大", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/489/person_main_img.jpg"}, {"group": "LIL LEAGUE", "name": "岡尾真虎", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/490/person_main_img.jpg"}, {"group": "LIL LEAGUE", "name": "百田隼麻", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/491/person_main_img.jpg"}, {"group": "LIL LEAGUE", "name": "難波碧空", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/622/person_main_img.jpg"}, {"group": "KID PHENOMENON", "name": "夫松健介", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/517/person_main_img.jpg"}, {"group": "KID PHENOMENON", "name": "遠藤翼空", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/518/person_main_img.jpg"}, {"group": "KID PHENOMENON", "name": "岡尾琥珀", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/519/person_main_img.jpg"}, {"group": "KID PHENOMENON", "name": "川口蒼真", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/520/person_main_img.jpg"}, {"group": "KID PHENOMENON", "name": "佐藤峻乃介", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/521/person_main_img.jpg"}, {"group": "KID PHENOMENON", "name": "山本光汰", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/522/person_main_img.jpg"}, {"group": "KID PHENOMENON", "name": "鈴木瑠偉", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/523/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "YUHI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/588/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "AERON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/525/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "KOTA", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/589/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "SHOW", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/590/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "TAKUMI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/591/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "HINATA", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/592/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "TAKI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/593/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "NOSUKE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/594/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "SHIGETORA", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/595/person_main_img.jpg"}, {"group": "THE JET BOY BANGERZ", "name": "AOI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/531/person_main_img.jpg"}, {"group": "WOLF HOWL HARMONY", "name": "RYOJI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/534/person_main_img.jpg"}, {"group": "WOLF HOWL HARMONY", "name": "SUZUKI", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/535/person_main_img.jpg"}, {"group": "WOLF HOWL HARMONY", "name": "GHEE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/536/person_main_img.jpg"}, {"group": "WOLF HOWL HARMONY", "name": "HIROTO", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/537/person_main_img.jpg"}];
-let score=[],counts=[],history=[],step=0,total=400,pair=null;
-const $=s=>document.querySelector(s);
-function elo(sa,sb,k=32,draw=false){const ea=1/(1+10**((sb-sa)/400)),eb=1-ea;return draw?[sa+k*(.5-ea),sb+k*(.5-eb)]:[sa+k*(1-ea),sb+k*(0-eb)]}
-function pairPick(){let m=Math.min(...counts),pool=PEOPLE.map((_,i)=>i).filter(i=>counts[i]===m),a=pool[Math.floor(Math.random()*pool.length)],b;do b=Math.floor(Math.random()*PEOPLE.length);while(b===a);return[a,b]}
-function show(){pair=pairPick();let[a,b]=pair;[['a',a],['b',b]].forEach(([x,i])=>{$('#n'+x).textContent=PEOPLE[i].name;$('#g'+x).textContent=PEOPLE[i].group;$('#p'+x).innerHTML='<img src="'+PEOPLE[i].image+'" alt="">'});$('#count').textContent=(step+1)+' / '+total;$('#bar').style.width=(step/total*100)+'%'}
-function record(type){let[a,b]=pair;history.push({score:[...score],counts:[...counts],step});if(type==='a'||type==='b'){let r=elo(score[a],score[b]);if(type==='a'){score[a]=r[0];score[b]=r[1]}else{score[b]=r[0];score[a]=r[1]}}else if(type==='both'){let r=elo(score[a],score[b],20,true);score[a]=r[0];score[b]=r[1]}counts[a]++;counts[b]++;step++;if(step>=total)finish();else show()}
-function finish(){let order=PEOPLE.map((p,i)=>({...p,i,s:score[i]})).sort((a,b)=>b.s-a.s);$('#game').classList.add('hidden');$('#result').classList.remove('hidden');$('#grid').innerHTML=order.slice(0,9).map((p,n)=>'<div class="rank"><div class="photo"><img src="'+p.image+'" alt=""></div><div class="ranktext"><div class="ranknum">#'+(n+1)+'</div><b>'+p.name+'</b><div class="group">'+p.group+'</div></div></div>').join('')}
-function start(n){total=n;score=PEOPLE.map(()=>1500);counts=PEOPLE.map(()=>0);history=[];step=0;$('#home').classList.add('hidden');$('#result').classList.add('hidden');$('#game').classList.remove('hidden');show()}
-$('#start200').onclick=()=>start(200);$('#start400').onclick=()=>start(400);$('#a').onclick=()=>record('a');$('#b').onclick=()=>record('b');$('#both').onclick=()=>record('both');$('#skip').onclick=()=>{step++;if(step>=total)finish();else show()};$('#undo').onclick=()=>{let h=history.pop();if(!h)return;score=h.score;counts=h.counts;step=h.step;show()};$('#again').onclick=()=>{$('#result').classList.add('hidden');$('#home').classList.remove('hidden')};
-</script></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EXILE TRIBE 好き顔9選</title>
+<meta name="description" content="EXILE TRIBE 85名から、2人ずつ顔を比較して好きな方を選ぶ好き顔9選。">
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--text:#151515;--muted:#777;--line:#deded8;--accent:#111}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
+button{font:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 56px}
+header{text-align:center;padding:28px 0 20px}
+h1{font-size:clamp(28px,5vw,46px);letter-spacing:.03em;margin:0 0 12px}
+.lead{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+.progress{margin:22px auto 0;max-width:700px}
+.progress-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px}
+.bar{height:5px;background:#e5e5e1;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#111;transition:width .25s}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px auto 18px;max-width:920px}
+.choice{border:1px solid var(--line);background:var(--card);padding:0;cursor:pointer;border-radius:12px;overflow:hidden;transition:transform .15s,box-shadow .15s,border-color .15s}
+.choice:hover{transform:translateY(-2px);box-shadow:0 8px 24px #00000012;border-color:#aaa}
+.choice:focus-visible{outline:3px solid #888;outline-offset:3px}
+.photo{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:#eee}
+.caption{padding:15px 16px 17px;text-align:center}
+.name{font-size:18px;font-weight:700;line-height:1.4}
+.group{font-size:12px;color:var(--muted);margin-top:5px}
+.hint{text-align:center;color:var(--muted);font-size:13px;margin:8px 0 20px}
+.actions{text-align:center}
+.secondary{border:1px solid #ccc;background:#fff;border-radius:8px;padding:9px 14px;cursor:pointer;color:#555}
+.hidden{display:none!important}
+.result{text-align:center}
+.result h2{font-size:30px;margin:20px 0 8px}
+.result .sub{color:var(--muted);font-size:13px;margin:0 0 24px}
+.top9{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;text-align:left}
+.rank-card{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.rank-photo{width:100%;aspect-ratio:3/4;object-fit:cover;background:#eee;display:block}
+.rank-info{padding:12px 13px 15px}
+.rank-no{font-size:12px;color:var(--muted);letter-spacing:.08em}
+.rank-name{font-weight:700;font-size:17px;margin-top:3px}
+.rank-group{font-size:12px;color:var(--muted);margin-top:3px}
+.rating{font-size:12px;color:#999;margin-top:8px}
+.all{margin-top:28px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px}
+.all summary{cursor:pointer;font-weight:600}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+th{text-align:left;color:#777;font-weight:500}
+footer{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:#888;line-height:1.7}
+footer a{color:inherit}
+@media(max-width:700px){
+ .wrap{padding:18px 12px 40px}
+ header{padding:20px 0 12px}
+ .pair{gap:9px;margin-top:18px}
+ .caption{padding:10px 8px 12px}
+ .name{font-size:15px}
+ .group{font-size:10px}
+ .top9{grid-template-columns:repeat(2,1fr);gap:10px}
+ .rank-name{font-size:14px}
+ .rank-info{padding:9px}
+}
+@media(max-width:430px){.top9{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>EXILE TRIBE 好き顔9選</h1>
+  <p class="lead">85名の中から2人ずつ顔を比較して、あなたの「好き顔」TOP9を決定します。</p>
+  <div class="progress" id="progressBox">
+    <div class="progress-row"><span id="countText">0 / 400</span><span id="percentText">0%</span></div>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+</header>
+
+<main id="game">
+  <div class="pair" id="pair"></div>
+  <p class="hint">写真を見比べて、より好きな方を選んでください。</p>
+  <div class="actions"><button class="secondary" id="resetBtn">最初からやり直す</button></div>
+</main>
+
+<section class="result hidden" id="result">
+  <h2>あなたの好き顔 TOP9</h2>
+  <p class="sub">400回の比較結果をEloレーティングで集計しました。</p>
+  <div class="top9" id="top9"></div>
+  <details class="all">
+    <summary>85名の全順位を見る</summary>
+    <table><thead><tr><th>順位</th><th>名前</th><th>所属</th><th>Eloレーティング</th></tr></thead><tbody id="ranking"></tbody></table>
+  </details>
+  <div class="actions" style="margin-top:20px"><button class="secondary" id="resetBtn2">もう一度遊ぶ</button></div>
+</section>
+
+<footer>
+  <div>候補者：LDH JAPANの各ARTIST / MEMBERページを基準に選定しています。兼任者は主要グループ側の写真を使用しています。</div>
+  <div>写真：LDH JAPAN公式サイトのMEMBERプロフィール画像を使用しています。© LDH JAPAN Inc. 本ページはLDH JAPAN公式サイトとは無関係のファン制作ページです。</div>
+</footer>
+</div>
+
+<script>
+const TOTAL=400, K=32, START=1500;
+const members = [{"id": 0, "name": "EXILE ATSUSHI", "source": "EXILE", "image": "https://www.ldh.co.jp/image/management2/exile_atsushi/person_artist_atsushi_260518.jpg"}, {"id": 1, "name": "EXILE TAKAHIRO", "source": "EXILE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/130/person_main_img.jpg"}, {"id": 2, "name": "EXILE AKIRA", "source": "EXILE THE SECOND", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/327/person_main_img.jpg"}, {"id": 3, "name": "橘KENCHI", "source": "EXILE THE SECOND", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/329/person_main_img.jpg"}, {"id": 4, "name": "EXILE TETSUYA", "source": "EXILE THE SECOND", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/330/person_main_img.jpg"}, {"id": 5, "name": "EXILE NESMITH", "source": "EXILE THE SECOND", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/331/person_main_img.jpg"}, {"id": 6, "name": "EXILE SHOKICHI", "source": "EXILE THE SECOND", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/332/person_main_img.jpg"}, {"id": 7, "name": "EXILE NAOTO", "source": "三代目 J SOUL BROTHERS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/335/person_main_img.jpg"}, {"id": 8, "name": "小林直己", "source": "三代目 J SOUL BROTHERS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/336/person_main_img.jpg"}, {"id": 9, "name": "ELLY", "source": "三代目 J SOUL BROTHERS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/200/person_main_img.jpg"}, {"id": 10, "name": "山下健二郎", "source": "三代目 J SOUL BROTHERS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/201/person_main_img.jpg"}, {"id": 11, "name": "岩田剛典", "source": "三代目 J SOUL BROTHERS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/342/person_main_img.jpg"}, {"id": 12, "name": "今市隆二", "source": "三代目 J SOUL BROTHERS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/202/person_main_img.jpg"}, {"id": 13, "name": "ØMI", "source": "三代目 J SOUL BROTHERS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/203/person_main_img.jpg"}, {"id": 14, "name": "白濱亜嵐", "source": "GENERATIONS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/339/person_main_img.jpg"}, {"id": 15, "name": "片寄涼太", "source": "GENERATIONS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/204/person_main_img.jpg"}, {"id": 16, "name": "数原龍友", "source": "GENERATIONS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/205/person_main_img.jpg"}, {"id": 17, "name": "小森隼", "source": "GENERATIONS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/206/person_main_img.jpg"}, {"id": 18, "name": "佐野玲於", "source": "GENERATIONS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/207/person_main_img.jpg"}, {"id": 19, "name": "中務裕太", "source": "GENERATIONS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/209/person_main_img.jpg"}, {"id": 20, "name": "LIKIYA", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/263/person_main_img.jpg"}, {"id": 21, "name": "陣", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/267/person_main_img.jpg"}, {"id": 22, "name": "RIKU", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/260/person_main_img.jpg"}, {"id": 23, "name": "神谷健太", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/264/person_main_img.jpg"}, {"id": 24, "name": "與那嶺瑠唯", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/274/person_main_img.jpg"}, {"id": 25, "name": "山本彰吾", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/272/person_main_img.jpg"}, {"id": 26, "name": "川村壱馬", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/265/person_main_img.jpg"}, {"id": 27, "name": "吉野北人", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/273/person_main_img.jpg"}, {"id": 28, "name": "岩谷翔吾", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/262/person_main_img.jpg"}, {"id": 29, "name": "浦川翔平", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/275/person_main_img.jpg"}, {"id": 30, "name": "藤原樹", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/271/person_main_img.jpg"}, {"id": 31, "name": "武知海青", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/269/person_main_img.jpg"}, {"id": 32, "name": "長谷川慎", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/270/person_main_img.jpg"}, {"id": 33, "name": "龍", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/261/person_main_img.jpg"}, {"id": 34, "name": "鈴木昂秀", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/268/person_main_img.jpg"}, {"id": 35, "name": "後藤拓磨", "source": "THE RAMPAGE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/266/person_main_img.jpg"}, {"id": 36, "name": "世界", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/301/person_main_img.jpg"}, {"id": 37, "name": "佐藤大樹", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/302/person_main_img.jpg"}, {"id": 38, "name": "澤本夏輝", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/255/person_main_img.jpg"}, {"id": 39, "name": "瀬口黎弥", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/277/person_main_img.jpg"}, {"id": 40, "name": "堀夏喜", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/279/person_main_img.jpg"}, {"id": 41, "name": "木村慧人", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/280/person_main_img.jpg"}, {"id": 42, "name": "八木勇征", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/282/person_main_img.jpg"}, {"id": 43, "name": "中島颯太", "source": "FANTASTICS", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/281/person_main_img.jpg"}, {"id": 44, "name": "日髙竜太", "source": "BALLISTIK BOYZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/378/person_main_img.jpg"}, {"id": 45, "name": "加納嘉将", "source": "BALLISTIK BOYZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/436/person_main_img.jpg"}, {"id": 46, "name": "海沼流星", "source": "BALLISTIK BOYZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/380/person_main_img.jpg"}, {"id": 47, "name": "深堀未来", "source": "BALLISTIK BOYZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/381/person_main_img.jpg"}, {"id": 48, "name": "奥田力也", "source": "BALLISTIK BOYZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/382/person_main_img.jpg"}, {"id": 49, "name": "松井利樹", "source": "BALLISTIK BOYZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/383/person_main_img.jpg"}, {"id": 50, "name": "砂田将宏", "source": "BALLISTIK BOYZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/384/person_main_img.jpg"}, {"id": 51, "name": "剣", "source": "PSYCHIC FEVER", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/498/person_main_img.jpg"}, {"id": 52, "name": "中西椋雅", "source": "PSYCHIC FEVER", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/451/person_main_img.jpg"}, {"id": 53, "name": "渡邉廉", "source": "PSYCHIC FEVER", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/452/person_main_img.jpg"}, {"id": 54, "name": "JIMMY", "source": "PSYCHIC FEVER", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/456/person_main_img.jpg"}, {"id": 55, "name": "小波津志", "source": "PSYCHIC FEVER", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/454/person_main_img.jpg"}, {"id": 56, "name": "半田龍臣", "source": "PSYCHIC FEVER", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/455/person_main_img.jpg"}, {"id": 57, "name": "WEESA", "source": "PSYCHIC FEVER", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/458/person_main_img.jpg"}, {"id": 58, "name": "岩城星那", "source": "LIL LEAGUE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/487/person_main_img.jpg"}, {"id": 59, "name": "中村竜大", "source": "LIL LEAGUE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/488/person_main_img.jpg"}, {"id": 60, "name": "山田晃大", "source": "LIL LEAGUE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/489/person_main_img.jpg"}, {"id": 61, "name": "岡尾真虎", "source": "LIL LEAGUE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/490/person_main_img.jpg"}, {"id": 62, "name": "百田隼麻", "source": "LIL LEAGUE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/491/person_main_img.jpg"}, {"id": 63, "name": "難波碧空", "source": "LIL LEAGUE", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/622/person_main_img.jpg"}, {"id": 64, "name": "夫松健介", "source": "KID PHENOMENON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/517/person_main_img.jpg"}, {"id": 65, "name": "遠藤翼空", "source": "KID PHENOMENON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/518/person_main_img.jpg"}, {"id": 66, "name": "岡尾琥珀", "source": "KID PHENOMENON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/519/person_main_img.jpg"}, {"id": 67, "name": "川口蒼真", "source": "KID PHENOMENON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/520/person_main_img.jpg"}, {"id": 68, "name": "佐藤峻乃介", "source": "KID PHENOMENON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/521/person_main_img.jpg"}, {"id": 69, "name": "山本光汰", "source": "KID PHENOMENON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/522/person_main_img.jpg"}, {"id": 70, "name": "鈴木瑠偉", "source": "KID PHENOMENON", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/523/person_main_img.jpg"}, {"id": 71, "name": "YUHI", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/588/person_main_img.jpg"}, {"id": 72, "name": "AERON", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/525/person_main_img.jpg"}, {"id": 73, "name": "KOTA", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/589/person_main_img.jpg"}, {"id": 74, "name": "SHOW", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/590/person_main_img.jpg"}, {"id": 75, "name": "TAKUMI", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/591/person_main_img.jpg"}, {"id": 76, "name": "HINATA", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/592/person_main_img.jpg"}, {"id": 77, "name": "TAKI", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/593/person_main_img.jpg"}, {"id": 78, "name": "NOSUKE", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/531/person_main_img.jpg"}, {"id": 79, "name": "SHIGETORA", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/594/person_main_img.jpg"}, {"id": 80, "name": "AOI", "source": "THE JET BOY BANGERZ", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/595/person_main_img.jpg"}, {"id": 81, "name": "RYOJI", "source": "WOLF HOWL HARMONY", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/534/person_main_img.jpg"}, {"id": 82, "name": "SUZUKI", "source": "WOLF HOWL HARMONY", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/535/person_main_img.jpg"}, {"id": 83, "name": "GHEE", "source": "WOLF HOWL HARMONY", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/536/person_main_img.jpg"}, {"id": 84, "name": "HIROTO", "source": "WOLF HOWL HARMONY", "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/537/person_main_img.jpg"}];
+
+const stateKey="exileTribeSukigao9_v1";
+let state;
+
+function seededShuffle(arr){
+  let seed=20260921;
+  const rand=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296};
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
+  return arr;
+}
+function makePairs(){
+  const pairs=[];
+  for(let i=0;i<members.length;i++) for(let j=i+1;j<members.length;j++) pairs.push([i,j]);
+  seededShuffle(pairs);
+  const counts=Array(members.length).fill(0), used=new Set(), selected=[];
+  // Greedy balanced selection: among still-unused pairs, repeatedly pick the pair
+  // with the lowest combined appearance count, then the lowest max count.
+  for(let n=0;n<TOTAL;n++){
+    let best=-1,bestScore=null;
+    for(let p=0;p<pairs.length;p++){
+      if(used.has(p)) continue;
+      const [a,b]=pairs[p];
+      const score=[counts[a]+counts[b],Math.max(counts[a],counts[b]),Math.abs(counts[a]-counts[b])];
+      if(bestScore===null || score[0]<bestScore[0] || (score[0]===bestScore[0]&&score[1]<bestScore[1]) || (score[0]===bestScore[0]&&score[1]===bestScore[1]&&score[2]<bestScore[2])){
+        best=p;bestScore=score;
+      }
+    }
+    used.add(best);
+    const [a,b]=pairs[best]; selected.push([a,b]); counts[a]++;counts[b]++;
+  }
+  return selected;
+}
+function fresh(){
+  return {pairs:makePairs(),step:0,ratings:Array(members.length).fill(START),wins:Array(members.length).fill(0),done:false};
+}
+function save(){localStorage.setItem(stateKey,JSON.stringify(state))}
+function load(){
+  try{const x=JSON.parse(localStorage.getItem(stateKey)); if(x&&x.pairs&&x.ratings&&x.step<=TOTAL)return x}catch(e){}
+  return fresh();
+}
+function expected(ra,rb){return 1/(1+Math.pow(10,(rb-ra)/400))}
+function choose(winner,loser){
+  const ea=expected(state.ratings[winner],state.ratings[loser]);
+  state.ratings[winner]+=K*(1-ea);
+  state.ratings[loser]+=K*(0-(1-ea));
+  state.wins[winner]++;
+  state.step++;
+  if(state.step>=TOTAL){state.done=true}
+  save(); render();
+}
+function card(i,side){
+  const m=members[i];
+  const b=document.createElement("button");
+  b.className="choice";
+  b.setAttribute("aria-label",m.name+"を選ぶ");
+  b.innerHTML=`<img class="photo" src="${m.image}" alt="${m.name}" loading="${side==='a'?'eager':'lazy'}"><div class="caption"><div class="name">${m.name}</div><div class="group">${m.source}</div></div>`;
+  b.addEventListener("click",()=>choose(i,side==="a"?state.pairs[state.step][1]:state.pairs[state.step][0]));
+  return b;
+}
+function render(){
+  const game=document.getElementById("game"), result=document.getElementById("result");
+  const count=state.step, pct=Math.round(count/TOTAL*100);
+  document.getElementById("countText").textContent=`${count} / ${TOTAL}`;
+  document.getElementById("percentText").textContent=`${pct}%`;
+  document.getElementById("bar").style.width=pct+"%";
+  if(state.done){
+    game.classList.add("hidden"); result.classList.remove("hidden"); renderResult(); return;
+  }
+  game.classList.remove("hidden"); result.classList.add("hidden");
+  const [a,b]=state.pairs[state.step];
+  const pair=document.getElementById("pair"); pair.innerHTML="";
+  pair.appendChild(card(a,"a")); pair.appendChild(card(b,"b"));
+}
+function renderResult(){
+  const order=members.map((m,i)=>i).sort((a,b)=>state.ratings[b]-state.ratings[a]);
+  const top=document.getElementById("top9"); top.innerHTML="";
+  order.slice(0,9).forEach((i,pos)=>{
+    const m=members[i];
+    const el=document.createElement("article");el.className="rank-card";
+    el.innerHTML=`<img class="rank-photo" src="${m.image}" alt="${m.name}"><div class="rank-info"><div class="rank-no">NO.${pos+1}</div><div class="rank-name">${m.name}</div><div class="rank-group">${m.source}</div><div class="rating">Eloレーティング ${Math.round(state.ratings[i])}</div></div>`;
+    top.appendChild(el);
+  });
+  const tbody=document.getElementById("ranking"); tbody.innerHTML="";
+  order.forEach((i,pos)=>{
+    const m=members[i],tr=document.createElement("tr");
+    tr.innerHTML=`<td>${pos+1}</td><td>${m.name}</td><td>${m.source}</td><td>${Math.round(state.ratings[i])}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+function reset(){
+  if(confirm("現在の進行状況をリセットしますか？")){
+    state=fresh();save();render();window.scrollTo({top:0,behavior:"smooth"});
+  }
+}
+document.getElementById("resetBtn").onclick=reset;
+document.getElementById("resetBtn2").onclick=reset;
+state=load();render();
+</script>
+</body>
+</html>
