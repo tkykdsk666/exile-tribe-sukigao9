@@ -232,16 +232,16 @@
       <strong>【遊び方と注意事項】</strong>
       <ul>
         <li>対象：EXILE TRIBE メンバー85名</li>
-        <li>「どちらも好き」や「パス（スキップ）」も選択可能です。</li>
+        <li>「どちらも好き」や「スキップ」も選択可能です。</li>
         <li>途中経過はブラウザに自動保存されます。</li>
         <li>「ひとつ戻る」ボタンで直前の選択を取り消せます。</li>
       </ul>
     </div>
 
-    <!-- 恢复 200 回 / 400 回 模式选择功能 -->
+    <!-- 模式选择按钮文案更新 -->
     <div class="mode-select-container">
-      <button class="btn-primary" onclick="startDiagnosis(200)">200回コースで診断（サクッと版）</button>
-      <button class="btn-primary secondary-mode" onclick="startDiagnosis(400)">400回コースで診断（じっくり版）</button>
+      <button class="btn-primary" onclick="startDiagnosis(200)">サクッと版</button>
+      <button class="btn-primary secondary-mode" onclick="startDiagnosis(400)">じっくり版</button>
     </div>
   </main>
 
@@ -276,11 +276,11 @@
       </div>
     </div>
 
-    <!-- 新增功能控制按钮 -->
+    <!-- 按钮文案更新：スキップ -->
     <div class="action-controls">
       <div class="btn-group-main">
         <button class="btn-action" onclick="voteBoth()">どちらも好き</button>
-        <button class="btn-action" onclick="skipPair()">パス（スキップ）</button>
+        <button class="btn-action" onclick="skipPair()">スキップ</button>
       </div>
       <div class="btn-group-sub">
         <button id="undo-btn" class="btn-secondary" onclick="undo()" disabled>↩ ひとつ戻る</button>
@@ -303,7 +303,7 @@
 
   <script>
     const K_FACTOR = 32;
-    let totalMatches = 200; // 默认 200
+    let totalMatches = 200;
 
     let members = [];
     let ratings = {};
@@ -366,6 +366,20 @@
       }
     }
 
+    function renderPair() {
+      const leftMember = currentPair[0];
+      const rightMember = currentPair[1];
+
+      // 严谨保证左右两边的图片、姓名和所属团体完全对应
+      document.getElementById('img-left').src = leftMember.image;
+      document.getElementById('name-left').textContent = leftMember.name;
+      document.getElementById('source-left').textContent = leftMember.source;
+
+      document.getElementById('img-right').src = rightMember.image;
+      document.getElementById('name-right').textContent = rightMember.name;
+      document.getElementById('source-right').textContent = rightMember.source;
+    }
+
     function nextPair() {
       updateUI();
       if (matchHistory.length >= totalMatches) {
@@ -380,17 +394,9 @@
       } while (idx1 === idx2);
 
       currentPair = [members[idx1], members[idx2]];
-
-      document.getElementById('img-left').src = currentPair[0].image;
-      document.getElementById('name-left').textContent = currentPair[0].name;
-      document.getElementById('source-left').textContent = currentPair[0].source;
-
-      document.getElementById('img-right').src = currentPair[1].image;
-      document.getElementById('name-right').textContent = currentPair[1].name;
-      document.getElementById('source-right').textContent = currentPair[1].source;
+      renderPair();
     }
 
-    // 单选逻辑
     function vote(winnerIndex) {
       const winner = currentPair[winnerIndex];
       const loser = currentPair[1 - winnerIndex];
@@ -413,7 +419,6 @@
       nextPair();
     }
 
-    // 新增：两个都喜欢（双方同时增加得分）
     function voteBoth() {
       matchHistory.push({
         pair: [...currentPair],
@@ -428,7 +433,6 @@
       nextPair();
     }
 
-    // 新增：跳过（保持积分，进入下一轮）
     function skipPair() {
       matchHistory.push({
         pair: [...currentPair],
@@ -439,7 +443,6 @@
       nextPair();
     }
 
-    // 撤销上一步
     function undo() {
       if (matchHistory.length === 0) return;
 
@@ -447,14 +450,7 @@
       ratings = lastState.previousRatings;
       currentPair = lastState.pair;
 
-      document.getElementById('img-left').src = currentPair[0].image;
-      document.getElementById('name-left').textContent = currentPair[0].name;
-      document.getElementById('source-left').textContent = currentPair[0].source;
-
-      document.getElementById('img-right').src = currentPair[1].image;
-      document.getElementById('name-right').textContent = currentPair[1].name;
-      document.getElementById('source-right').textContent = currentPair[1].source;
-
+      renderPair();
       saveState();
       updateUI();
     }
