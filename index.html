@@ -1,41 +1,407 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Description" content="EXILE TRIBE 85名から、2人ずつ顔を比較して好きな方を選ぶ好き顔9選。">
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    body {background-color: #f4f4f1}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 14.0px '.CJK Symbols Fallback SC'; color: #646464; -webkit-text-stroke: #646464}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px 'Helvetica Neue'; color: #646464; -webkit-text-stroke: #646464}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px 'Helvetica Neue'; color: #111111; -webkit-text-stroke: #111111; background-color: #0e0e0e; min-height: 15.0px}
-    p.p5 {margin: 0.0px 0.0px 20.0px 0.0px; text-align: center; font: 13.0px '.CJK Symbols Fallback SC'; color: #646464; -webkit-text-stroke: #646464}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px '.CJK Symbols Fallback SC'; color: #434343; -webkit-text-stroke: #434343}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #757575; -webkit-text-stroke: #757575}
-    span.s1 {font-kerning: none}
-    span.s2 {font: 40.0px 'PingFang SC'; font-kerning: none}
-    span.s3 {font: 40.0px '.AppleSimplifiedChineseFont'; font-kerning: none}
-    span.s4 {font: 14.0px 'Helvetica Neue'; font-kerning: none}
-    span.s5 {font: 14.0px 'PingFang SC'; font-kerning: none}
-    span.s6 {font: 13.0px 'PingFang SC'; font-kerning: none}
-    span.s7 {font: 12.0px 'PingFang SC'; font-kerning: none; background-color: #ffffff}
-    span.s8 {font-kerning: none; background-color: #ffffff}
-    span.s9 {font: 11.0px 'PingFang SC'; font-kerning: none}
-    span.s10 {font: 11.0px '.CJK Symbols Fallback SC'; font-kerning: none}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXILE TRIBE 好き顔9選</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #f4f4f1;
+      color: #111;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    header { text-align: center; margin-bottom: 20px; width: 100%; max-width: 500px; }
+    h1 { font-size: 1.8rem; font-weight: bold; margin-bottom: 6px; letter-spacing: 0.05em; }
+    .subtitle { font-size: 0.88rem; color: #646464; }
+
+    /* 各页面容器 */
+    .page-container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 1. トップページ (首页) */
+    #home-view {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      text-align: center;
+      margin-top: 10px;
+    }
+    .home-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .home-highlight {
+      background: #f0f0ed;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .home-highlight ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-top: 6px;
+    }
+    .btn-primary {
+      display: inline-block;
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      background: #111;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .btn-primary:active { transform: scale(0.98); }
+
+    /* 2. 診断ページ (对决页) */
+    #battle-view { display: none; }
+    .progress-container { width: 100%; margin-bottom: 16px; }
+    .progress-bar-bg { background-color: #e0e0dc; height: 8px; border-radius: 4px; overflow: hidden; }
+    .progress-bar-fill { background-color: #111; height: 100%; width: 0%; transition: width 0.2s; }
+    .progress-text { display: flex; justify-content: space-between; font-size: 0.8rem; color: #646464; margin-top: 6px; }
+
+    .battle-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .card {
+      flex: 1;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card:active { transform: scale(0.97); }
+    .card img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      background-color: #eee;
+    }
+    .card-info { padding: 10px 4px; text-align: center; width: 100%; }
+    .card-source { font-size: 0.72rem; color: #888; margin-bottom: 2px; }
+    .card-name { font-size: 0.9rem; font-weight: bold; color: #111; }
+
+    .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+    .btn-secondary {
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 20px;
+      cursor: pointer;
+      color: #444;
+      transition: background 0.2s;
+    }
+    .btn-secondary:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-secondary:hover:not(:disabled) { background: #eaeaea; }
+
+    /* 3. 結果ページ (结果页) */
+    #result-view { display: none; }
+    .grid-top9 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 16px 0 24px 0;
+      width: 100%;
+    }
+    .top9-item {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-align: center;
+      position: relative;
+    }
+    .top9-rank {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    .top9-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .top9-name { font-size: 0.78rem; font-weight: bold; padding: 6px 2px; color: #222; }
+
+    footer {
+      font-size: 0.7rem;
+      color: #757575;
+      text-align: center;
+      max-width: 480px;
+      margin-top: auto;
+      padding-top: 24px;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
-<h1 style="margin: 0.0px 0.0px 12.0px 0.0px; text-align: center; font: 40.0px 'Helvetica Neue'; color: #111111; -webkit-text-stroke: #111111"><span class="s1"><b>EXILE TRIBE </b></span><span class="s2"><b>好</b></span><span class="s3"><b>き</b></span><span class="s2"><b>顔</b></span><span class="s1"><b>9</b></span><span class="s2"><b>選</b><b></b></span></h1>
-<p class="p2"><span class="s4">85</span><span class="s5">人</span><span class="s1">から</span><span class="s5">、</span><span class="s1">あなたの</span><span class="s5">「好</span><span class="s1">き</span><span class="s5">顔」</span><span class="s4">TOP9</span><span class="s1">を</span><span class="s5">決定</span><span class="s1">します</span><span class="s5">。</span></p>
-<p class="p3"><span class="s1">0 / 400</span></p>
-<p class="p3"><span class="s1">0%</span></p>
-<p class="p4"><span class="s1"><i></i></span><br></p>
-<p class="p5"><span class="s6">写真</span><span class="s1">を</span><span class="s6">見比</span><span class="s1">べて</span><span class="s6">、</span><span class="s1">より</span><span class="s6">好</span><span class="s1">きな</span><span class="s6">方</span><span class="s1">を</span><span class="s6">選</span><span class="s1">んでください</span><span class="s6">。</span></p>
-<p class="p6"><span class="s7">最初</span><span class="s8">からやり</span><span class="s7">直</span><span class="s8">す</span></p>
-<p class="p7"><span class="s9">候補者：</span><span class="s1">LDH JAPAN</span><span class="s10">の</span><span class="s9">各</span><span class="s1">ARTIST / MEMBER</span><span class="s10">ページを</span><span class="s9">基準</span><span class="s10">に</span><span class="s9">選定</span><span class="s10">しています</span><span class="s9">。兼任者</span><span class="s10">は</span><span class="s9">主要</span><span class="s10">グループ</span><span class="s9">側</span><span class="s10">の</span><span class="s9">写真</span><span class="s10">を</span><span class="s9">使用</span><span class="s10">しています</span><span class="s9">。</span></p>
-<p class="p7"><span class="s9">写真：</span><span class="s1">LDH JAPAN</span><span class="s9">公式</span><span class="s10">サイトの</span><span class="s1">MEMBER</span><span class="s10">プロフィール</span><span class="s9">画像</span><span class="s10">を</span><span class="s9">使用</span><span class="s10">しています</span><span class="s9">。</span><span class="s1">© LDH JAPAN Inc. </span><span class="s9">本</span><span class="s10">ページは</span><span class="s1">LDH JAPAN</span><span class="s9">公式</span><span class="s10">サイトとは</span><span class="s9">無関係</span><span class="s10">のファン</span><span class="s9">制作</span><span class="s10">ページです</span><span class="s9">。</span></p>
+
+  <header>
+    <h1>EXILE TRIBE 好き顔9選</h1>
+    <p class="subtitle">85人から、あなたの「好き顔」TOP9を決定します。</p>
+  </header>
+
+  <!-- 1. トップページ (首页) -->
+  <main id="home-view" class="page-container">
+    <p class="home-desc">
+      画面に表示される2人のメンバー写真を比較して、より好きな顔を選んでください。<br>
+      全400回の選択を経て、あなたの理想の「好き顔 TOP9」が完成します！
+    </p>
+    <div class="home-highlight">
+      <strong>【遊び方と注意事項】</strong>
+      <ul>
+        <li>対象：EXILE TRIBE メンバー85名</li>
+        <li>途中経過はブラウザに自動保存されます。</li>
+        <li>「ひとつ戻る」ボタンで直前の選択を取り消せます。</li>
+      </ul>
+    </div>
+    <button class="btn-primary" onclick="startDiagnosis()">診断を開始する</button>
+  </main>
+
+  <!-- 2. 診断ページ (对决页) -->
+  <main id="battle-view" class="page-container">
+    <div class="progress-container">
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fill"></div>
+      </div>
+      <div class="progress-text">
+        <span id="progress-count">0 / 400</span>
+        <span id="progress-percent">0%</span>
+      </div>
+    </div>
+
+    <p style="font-size: 0.85rem; color: #555; margin-bottom: 12px;">写真を見比べて、より好きな方を選んでください。</p>
+
+    <div class="battle-container">
+      <div class="card" onclick="vote(0)">
+        <img id="img-left" src="" alt="Left Candidate">
+        <div class="card-info">
+          <div id="source-left" class="card-source"></div>
+          <div id="name-left" class="card-name"></div>
+        </div>
+      </div>
+      <div class="card" onclick="vote(1)">
+        <img id="img-right" src="" alt="Right Candidate">
+        <div class="card-info">
+          <div id="source-right" class="card-source"></div>
+          <div id="name-right" class="card-name"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="undo-btn" class="btn-secondary" onclick="undo()" disabled>↩ ひとつ戻る</button>
+      <button class="btn-secondary" onclick="resetAll()">最初からやり直す</button>
+    </div>
+  </main>
+
+  <!-- 3. 結果ページ (结果页) -->
+  <section id="result-view" class="page-container">
+    <h2 style="font-size: 1.3rem; text-align: center;">あなたの好き顔 TOP9</h2>
+    <div id="top9-grid" class="grid-top9"></div>
+    <button class="btn-secondary" onclick="resetAll()">もう一度やり直す</button>
+  </section>
+
+  <footer>
+    <p>候補者：LDH JAPANの各ARTIST / MEMBERページを基準に選定しています。兼任者は主要グループ側の写真を使用しています。</p>
+    <p>写真：LDH JAPAN公式サイトのMEMBERプロフィール画像を使用しています。© LDH JAPAN Inc. 本ページはLDH JAPAN公式サイトとは無関係のファン制作ページです。</p>
+  </footer>
+
+  <script>
+    const TOTAL_MATCHES = 400;
+    const K_FACTOR = 32;
+
+    let members = [];
+    let ratings = {};
+    let matchHistory = [];
+    let currentPair = [];
+
+    async function init() {
+      try {
+        const res = await fetch('./members.json');
+        members = await res.json();
+
+        const saved = localStorage.getItem('sukigao9_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          ratings = parsed.ratings;
+          matchHistory = parsed.matchHistory || [];
+        } else {
+          resetRatings();
+        }
+      } catch (err) {
+        alert('members.json の読み込みに失敗しました。');
+      }
+    }
+
+    function startDiagnosis() {
+      document.getElementById('home-view').style.display = 'none';
+      if (matchHistory.length >= TOTAL_MATCHES) {
+        showResult();
+      } else {
+        document.getElementById('battle-view').style.display = 'flex';
+        nextPair();
+      }
+    }
+
+    function resetRatings() {
+      ratings = {};
+      members.forEach(m => ratings[m.id] = 1500);
+      matchHistory = [];
+      saveState();
+    }
+
+    function saveState() {
+      localStorage.setItem('sukigao9_state', JSON.stringify({
+        ratings,
+        matchHistory
+      }));
+    }
+
+    function resetAll() {
+      if (confirm('進捗をリセットして最初からやり直しますか？')) {
+        resetRatings();
+        document.getElementById('result-view').style.display = 'none';
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('battle-view').style.display = 'flex';
+        nextPair();
+      }
+    }
+
+    function nextPair() {
+      updateUI();
+      if (matchHistory.length >= TOTAL_MATCHES) {
+        showResult();
+        return;
+      }
+
+      let idx1 = Math.floor(Math.random() * members.length);
+      let idx2;
+      do {
+        idx2 = Math.floor(Math.random() * members.length);
+      } while (idx1 === idx2);
+
+      currentPair = [members[idx1], members[idx2]];
+
+      document.getElementById('img-left').src = currentPair[0].image;
+      document.getElementById('name-left').textContent = currentPair[0].name;
+      document.getElementById('source-left').textContent = currentPair[0].source;
+
+      document.getElementById('img-right').src = currentPair[1].image;
+      document.getElementById('name-right').textContent = currentPair[1].name;
+      document.getElementById('source-right').textContent = currentPair[1].source;
+    }
+
+    function vote(winnerIndex) {
+      const winner = currentPair[winnerIndex];
+      const loser = currentPair[1 - winnerIndex];
+
+      matchHistory.push({
+        pair: [...currentPair],
+        previousRatings: { ...ratings }
+      });
+
+      const rWinner = ratings[winner.id];
+      const rLoser = ratings[loser.id];
+
+      const expectedWinner = 1 / (1 + Math.pow(10, (rLoser - rWinner) / 400));
+      const expectedLoser = 1 / (1 + Math.pow(10, (rWinner - rLoser) / 400));
+
+      ratings[winner.id] = rWinner + K_FACTOR * (1 - expectedWinner);
+      ratings[loser.id] = rLoser + K_FACTOR * (0 - expectedLoser);
+
+      saveState();
+      nextPair();
+    }
+
+    function undo() {
+      if (matchHistory.length === 0) return;
+
+      const lastState = matchHistory.pop();
+      ratings = lastState.previousRatings;
+      currentPair = lastState.pair;
+
+      document.getElementById('img-left').src = currentPair[0].image;
+      document.getElementById('name-left').textContent = currentPair[0].name;
+      document.getElementById('source-left').textContent = currentPair[0].source;
+
+      document.getElementById('img-right').src = currentPair[1].image;
+      document.getElementById('name-right').textContent = currentPair[1].name;
+      document.getElementById('source-right').textContent = currentPair[1].source;
+
+      saveState();
+      updateUI();
+    }
+
+    function updateUI() {
+      const count = matchHistory.length;
+      const percent = Math.floor((count / TOTAL_MATCHES) * 100);
+      document.getElementById('progress-bar').style.width = percent + '%';
+      document.getElementById('progress-count').textContent = `${count} / ${TOTAL_MATCHES}`;
+      document.getElementById('progress-percent').textContent = `${percent}%`;
+      
+      document.getElementById('undo-btn').disabled = (count === 0);
+    }
+
+    function showResult() {
+      document.getElementById('battle-view').style.display = 'none';
+      document.getElementById('result-view').style.display = 'flex';
+
+      const sorted = [...members].sort((a, b) => ratings[b.id] - ratings[a.id]);
+      const top9 = sorted.slice(0, 9);
+
+      const grid = document.getElementById('top9-grid');
+      grid.innerHTML = '';
+
+      top9.forEach((m, idx) => {
+        const item = document.createElement('div');
+        item.className = 'top9-item';
+        item.innerHTML = `
+          <div class="top9-rank">#${idx + 1}</div>
+          <img src="${m.image}" alt="${m.name}">
+          <div class="top9-name">${m.name}</div>
+        `;
+        grid.appendChild(item);
+      });
+    }
+
+    window.onload = init;
+  </script>
 </body>
 </html>
