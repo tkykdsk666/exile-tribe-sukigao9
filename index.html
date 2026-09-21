@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 画像の直リンク・防盗鏈対策 -->
+  <!-- 防盗链配置：确保 LDH 官方图片正常加载 -->
   <meta name="referrer" content="no-referrer">
   <title>EXILE TRIBE 好き顔9選</title>
   <style>
@@ -30,7 +30,7 @@
       align-items: center;
     }
 
-    /* 1. トップページ */
+    /* 1. トップページ (首页) */
     #home-view {
       background: #ffffff;
       border-radius: 16px;
@@ -59,8 +59,16 @@
       padding-left: 20px;
       margin-top: 6px;
     }
+
+    /* 模式选择按钮组 */
+    .mode-select-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
     .btn-primary {
-      display: inline-block;
+      display: block;
       width: 100%;
       padding: 14px 0;
       font-size: 1rem;
@@ -73,9 +81,12 @@
       transition: background 0.2s, transform 0.1s;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
+    .btn-primary.secondary-mode {
+      background: #4a4a4a;
+    }
     .btn-primary:active { transform: scale(0.98); }
 
-    /* 2. 診断ページ */
+    /* 2. 診断ページ (诊断页) */
     #battle-view { display: none; }
     .progress-container { width: 100%; margin-bottom: 16px; }
     .progress-bar-bg { background-color: #e0e0dc; height: 8px; border-radius: 4px; overflow: hidden; }
@@ -115,7 +126,7 @@
     .card-source { font-size: 0.72rem; color: #888; margin-bottom: 2px; }
     .card-name { font-size: 0.9rem; font-weight: bold; color: #111; }
 
-    /* 操作ボタンエリア（多段構成） */
+    /* 功能操作区 */
     .action-controls {
       display: flex;
       flex-direction: column;
@@ -138,7 +149,7 @@
     .btn-action {
       flex: 1;
       padding: 12px 0;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: bold;
       border: 1px solid #111;
       background: #fff;
@@ -162,7 +173,7 @@
     .btn-secondary:disabled { opacity: 0.35; cursor: not-allowed; }
     .btn-secondary:hover:not(:disabled) { background: #eaeaea; }
 
-    /* 3. 結果ページ */
+    /* 3. 結果ページ (结果页) */
     #result-view { display: none; }
     .grid-top9 {
       display: grid;
@@ -211,32 +222,37 @@
     <p class="subtitle">85人から、あなたの「好き顔」TOP9を決定します。</p>
   </header>
 
-  <!-- 1. トップページ -->
+  <!-- 1. トップページ (首页) -->
   <main id="home-view" class="page-container">
     <p class="home-desc">
       画面に表示される2人のメンバー写真を比較して、より好きな顔を選んでください。<br>
-      全400回の選択を経て、あなたの理想の「好き顔 TOP9」が完成します！
+      選択を重ねることで、あなたの理想の「好き顔 TOP9」が完成します！
     </p>
     <div class="home-highlight">
       <strong>【遊び方と注意事項】</strong>
       <ul>
         <li>対象：EXILE TRIBE メンバー85名</li>
-        <li>「両方好き」や「パス」も選択可能です。</li>
+        <li>「どちらも好き」や「パス（スキップ）」も選択可能です。</li>
         <li>途中経過はブラウザに自動保存されます。</li>
         <li>「ひとつ戻る」ボタンで直前の選択を取り消せます。</li>
       </ul>
     </div>
-    <button class="btn-primary" onclick="startDiagnosis()">診断を開始する</button>
+
+    <!-- 恢复 200 回 / 400 回 模式选择功能 -->
+    <div class="mode-select-container">
+      <button class="btn-primary" onclick="startDiagnosis(200)">200回コースで診断（サクッと版）</button>
+      <button class="btn-primary secondary-mode" onclick="startDiagnosis(400)">400回コースで診断（じっくり版）</button>
+    </div>
   </main>
 
-  <!-- 2. 診断ページ -->
+  <!-- 2. 診断ページ (诊断页) -->
   <main id="battle-view" class="page-container">
     <div class="progress-container">
       <div class="progress-bar-bg">
         <div id="progress-bar" class="progress-bar-fill"></div>
       </div>
       <div class="progress-text">
-        <span id="progress-count">0 / 400</span>
+        <span id="progress-count">0 / 200</span>
         <span id="progress-percent">0%</span>
       </div>
     </div>
@@ -260,7 +276,7 @@
       </div>
     </div>
 
-    <!-- 拡張された操作ボタン群 -->
+    <!-- 新增功能控制按钮 -->
     <div class="action-controls">
       <div class="btn-group-main">
         <button class="btn-action" onclick="voteBoth()">どちらも好き</button>
@@ -273,11 +289,11 @@
     </div>
   </main>
 
-  <!-- 3. 結果ページ -->
+  <!-- 3. 結果ページ (结果页) -->
   <section id="result-view" class="page-container">
     <h2 style="font-size: 1.3rem; text-align: center;">あなたの好き顔 TOP9</h2>
     <div id="top9-grid" class="grid-top9"></div>
-    <button class="btn-secondary" onclick="resetAll()">もう一度やり直す</button>
+    <button class="btn-secondary" onclick="resetAll()">最初からやり直す</button>
   </section>
 
   <footer>
@@ -286,8 +302,8 @@
   </footer>
 
   <script>
-    const TOTAL_MATCHES = 400;
     const K_FACTOR = 32;
+    let totalMatches = 200; // 默认 200
 
     let members = [];
     let ratings = {};
@@ -304,6 +320,7 @@
           const parsed = JSON.parse(saved);
           ratings = parsed.ratings;
           matchHistory = parsed.matchHistory || [];
+          totalMatches = parsed.totalMatches || 200;
         } else {
           resetRatings();
         }
@@ -312,9 +329,12 @@
       }
     }
 
-    function startDiagnosis() {
+    function startDiagnosis(matchesCount) {
+      if (matchesCount) {
+        totalMatches = matchesCount;
+      }
       document.getElementById('home-view').style.display = 'none';
-      if (matchHistory.length >= TOTAL_MATCHES) {
+      if (matchHistory.length >= totalMatches) {
         showResult();
       } else {
         document.getElementById('battle-view').style.display = 'flex';
@@ -332,7 +352,8 @@
     function saveState() {
       localStorage.setItem('sukigao9_state', JSON.stringify({
         ratings,
-        matchHistory
+        matchHistory,
+        totalMatches
       }));
     }
 
@@ -340,15 +361,14 @@
       if (confirm('進捗をリセットして最初からやり直しますか？')) {
         resetRatings();
         document.getElementById('result-view').style.display = 'none';
-        document.getElementById('home-view').style.display = 'none';
-        document.getElementById('battle-view').style.display = 'flex';
-        nextPair();
+        document.getElementById('battle-view').style.display = 'none';
+        document.getElementById('home-view').style.display = 'flex';
       }
     }
 
     function nextPair() {
       updateUI();
-      if (matchHistory.length >= TOTAL_MATCHES) {
+      if (matchHistory.length >= totalMatches) {
         showResult();
         return;
       }
@@ -370,7 +390,7 @@
       document.getElementById('source-right').textContent = currentPair[1].source;
     }
 
-    // 単独選択
+    // 单选逻辑
     function vote(winnerIndex) {
       const winner = currentPair[winnerIndex];
       const loser = currentPair[1 - winnerIndex];
@@ -393,7 +413,7 @@
       nextPair();
     }
 
-    // 「両方好き」処理（両者にボーナス加算）
+    // 新增：两个都喜欢（双方同时增加得分）
     function voteBoth() {
       matchHistory.push({
         pair: [...currentPair],
@@ -408,7 +428,7 @@
       nextPair();
     }
 
-    // 「パス」処理（レーティングは変更せず次の対戦へ）
+    // 新增：跳过（保持积分，进入下一轮）
     function skipPair() {
       matchHistory.push({
         pair: [...currentPair],
@@ -419,7 +439,7 @@
       nextPair();
     }
 
-    // 撤回（ひとつ戻る）
+    // 撤销上一步
     function undo() {
       if (matchHistory.length === 0) return;
 
@@ -441,9 +461,9 @@
 
     function updateUI() {
       const count = matchHistory.length;
-      const percent = Math.floor((count / TOTAL_MATCHES) * 100);
+      const percent = Math.floor((count / totalMatches) * 100);
       document.getElementById('progress-bar').style.width = percent + '%';
-      document.getElementById('progress-count').textContent = `${count} / ${TOTAL_MATCHES}`;
+      document.getElementById('progress-count').textContent = `${count} / ${totalMatches}`;
       document.getElementById('progress-percent').textContent = `${percent}%`;
       
       document.getElementById('undo-btn').disabled = (count === 0);
