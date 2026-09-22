@@ -3,7 +3,7 @@
     "id": 0,
     "name": "EXILE ATSUSHI",
     "source": "EXILE",
-    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/129/person_main_img.jpg"
+    "image": "https://www.ldh.co.jp/image/management2/exile_atsushi/person_artist_atsushi_260518.jpg"
   },
   {
     "id": 1,
@@ -15,13 +15,13 @@
     "id": 2,
     "name": "EXILE AKIRA",
     "source": "EXILE THE SECOND",
-    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/131/person_main_img.jpg"
+    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/129/person_main_img.jpg"
   },
   {
     "id": 3,
-    "name": "橘KENCHI",
+    "name": "橘ケンチ",
     "source": "EXILE THE SECOND",
-    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/132/person_main_img.jpg"
+    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/131/person_main_img.jpg"
   },
   {
     "id": 4,
@@ -145,7 +145,7 @@
   },
   {
     "id": 24,
-    "name": "與那嶺瑠唯",
+    "name": "与那嶺瑠唯",
     "source": "THE RAMPAGE",
     "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/274/person_main_img.jpg"
   },
@@ -219,13 +219,13 @@
     "id": 36,
     "name": "世界",
     "source": "FANTASTICS",
-    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/301/person_main_img.jpg"
+    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/141/person_main_img.jpg"
   },
   {
     "id": 37,
     "name": "佐藤大樹",
     "source": "FANTASTICS",
-    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/302/person_main_img.jpg"
+    "image": "https://ldhco-public.s3.ap-northeast-1.amazonaws.com/management/img_person/142/person_main_img.jpg"
   },
   {
     "id": 38,
