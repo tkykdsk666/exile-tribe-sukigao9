@@ -1,20 +1,17 @@
 # EXILE TRIBE 好き顔9選
 
-固定候補85名を、2人ずつ比較してElo Ratingで集計する静的サイトです。
+GitHub Pages 用のファン制作ページです。
 
-## 含まれるもの
-- 候補者85名
-- 400回のペア比較
-- Elo Rating（初期1500 / K=32）
-- 進行状況をブラウザのlocalStorageに保存
-- 完了後TOP9と全85名の順位を表示
-- ユーザーによるメンバー名・写真の入力は不要
+## ファイル
+- `index.html`：サイト本体
 
-## GitHub Pages
-1. GitHubでリポジトリ `exile-tribe-sukigao9` を開く。
-2. `index.html` と `members.json` をアップロードして、既存ファイルを置き換える。
-3. Settings → Pages → Deploy from a branch → `main` / `/ (root)` を選択。
-4. 数分後、GitHub PagesのURLを開く。
-
-## 写真
-写真URLはLDH JAPAN公式サイトのMEMBERプロフィール画像を参照しています。兼任者は主要グループ側のプロフィール画像を指定しています。
+## 仕様
+- 現役 EXILE TRIBE メンバー 85名
+- 兼任メンバーは1人につき1回のみ収録
+- 兼任 EXILE メンバーは主要グループ側の写真を優先
+- Eloレーティングによる2択比較
+- サクッと版：200回
+- じっくり版：400回
+- 日本語 / English 切り替え
+- スマートフォン表示を優先したレスポンシブUI
+- メンバー写真はLDH JAPAN公式サイトの画像を直接参照
